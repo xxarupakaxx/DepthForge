@@ -1,0 +1,77 @@
+backend:
+  name: github
+  repo: xxarupakaxx/DepthForge
+  branch: main
+
+# Cloudflare Pages の場合は以下を使用
+# backend:
+#   name: git-gateway
+#   branch: main
+
+media_folder: "public/assets/uploads"
+public_folder: "/assets/uploads"
+
+locale: "ja"
+
+collections:
+  - name: "entries"
+    label: "エントリ"
+    label_singular: "エントリ"
+    folder: "src/content/entries"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - {
+          label: "タイトル",
+          name: "title",
+          widget: "string",
+          hint: "浅さを一言で表すタイトル",
+        }
+      - {
+          label: "日付",
+          name: "date",
+          widget: "date",
+          format: "YYYY-MM-DD",
+          default: "",
+        }
+      - label: "媒体種別"
+        name: "sourceType"
+        widget: "select"
+        options:
+          - { label: "本", value: "book" }
+          - { label: "記事", value: "article" }
+          - { label: "動画", value: "video" }
+          - { label: "会話", value: "conversation" }
+          - { label: "その他", value: "other" }
+      - {
+          label: "出典タイトル",
+          name: "sourceTitle",
+          widget: "string",
+          hint: "書名や動画名など",
+        }
+      - {
+          label: "出典URL",
+          name: "sourceURL",
+          widget: "string",
+          required: false,
+        }
+      - label: "タグ（浅さパターン）"
+        name: "tags"
+        widget: "list"
+        hint: "複数選択可能。新しいタグも追加できます。"
+        allow_add: true
+      - label: "影響度"
+        name: "impactLevel"
+        widget: "select"
+        options:
+          - { label: "小", value: "small" }
+          - { label: "中", value: "medium" }
+          - { label: "大", value: "large" }
+      - {
+          label: "本文",
+          name: "body",
+          widget: "markdown",
+          hint: "以下のセクションを含めてください：\n- 浅かった自分の考え\n- 浅さが露呈した瞬間（悔しさ）\n- より深い構造（著者・話者側の論理）\n- 自分の思考の不足\n- 構造の抽象化（再利用できる形）\n- 転用できる場面\n- 次に同じ浅さを避けるためのルール",
+        }

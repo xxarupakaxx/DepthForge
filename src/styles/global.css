@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+/* フォント設定 */
+body {
+  font-family: "Inter", "Noto Sans JP", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+/* タイポグラフィ */
+.prose {
+  line-height: 1.75;
+  color: #1a1a1a;
+}
+
+.prose h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.prose h2 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+}
+
+.prose ul,
+.prose ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+/* Fractured Geometry 背景 */
+.fractured-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.fractured-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 45%,
+      rgba(229, 231, 235, 0.3) 45%,
+      rgba(229, 231, 235, 0.3) 55%,
+      transparent 55%,
+      transparent 100%
+    ),
+    linear-gradient(
+      45deg,
+      transparent 0%,
+      transparent 45%,
+      rgba(209, 213, 219, 0.2) 45%,
+      rgba(209, 213, 219, 0.2) 55%,
+      transparent 55%,
+      transparent 100%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 48%,
+      rgba(243, 244, 246, 0.4) 48%,
+      rgba(243, 244, 246, 0.4) 52%,
+      transparent 52%,
+      transparent 100%
+    );
+  background-size: 400px 400px, 300px 300px, 500px 500px;
+  background-position: 0 0, 100px 100px, 200px 50px;
+  opacity: 0.6;
+  z-index: 0;
+}
+
+.fractured-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* ホバーエフェクト */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

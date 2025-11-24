@@ -1,0 +1,83 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entries: CollectionEntry<"entries">[];
+  tagName: string;
+}
+
+const { entries, tagName } = Astro.props;
+
+// 統計情報の計算
+const totalEntries = entries.length;
+
+const thirtyDaysAgo = new Date();
+thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+const recentEntries = entries.filter(
+  (entry) => new Date(entry.data.date) >= thirtyDaysAgo
+).length;
+
+const sortedByDate = [...entries].sort(
+  (a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime()
+);
+const firstAppearance = sortedByDate[0]?.data.date || "-";
+
+// 媒体別の件数
+const sourceTypeCounts: Record<string, number> = {};
+entries.forEach((entry) => {
+  const type = entry.data.sourceType;
+  sourceTypeCounts[type] = (sourceTypeCounts[type] || 0) + 1;
+});
+
+const sourceTypeLabels: Record<string, string> = {
+  book: "本",
+  article: "記事",
+  video: "動画",
+  conversation: "会話",
+  other: "その他",
+};
+
+const stats = [
+  { label: "総エントリ数", value: totalEntries, icon: "📊" },
+  { label: "直近30日", value: recentEntries, icon: "📅" },
+  { label: "最初の出現", value: firstAppearance, icon: "🎯" },
+];
+---
+
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">統計情報</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      {
+        stats.map((stat) => (
+          <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center hover-lift">
+            <div class="text-3xl mb-2">{stat.icon}</div>
+            <div class="text-2xl font-bold text-gray-900 mb-1">
+              {stat.value}
+            </div>
+            <div class="text-sm text-gray-600">{stat.label}</div>
+          </div>
+        ))
+      }
+    </div>
+
+    {
+      Object.keys(sourceTypeCounts).length > 0 && (
+        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">媒体別の分布</h3>
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {Object.entries(sourceTypeCounts).map(([type, count]) => (
+              <div class="text-center">
+                <div class="text-xl font-bold text-gray-900">{count}</div>
+                <div class="text-sm text-gray-600">
+                  {sourceTypeLabels[type] || type}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </div>
+</section>

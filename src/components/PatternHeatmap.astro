@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+
+const allEntries = await getCollection('entries');
+const tagCounts = new Map<string, number>();
+
+allEntries.forEach(entry => {
+  entry.data.tags.forEach(tag => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+
+const sortedTags = Array.from(tagCounts.entries())
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 10);
+
+const maxCount = Math.max(...Array.from(tagCounts.values()));
+
+function getOpacity(count: number): number {
+  return 0.3 + (count / maxCount) * 0.7;
+}
+---
+
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-8">浅さのパターン</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      {sortedTags.map(([tag, count]) => (
+        <a
+          href={`/tags/${encodeURIComponent(tag)}`}
+          class="hover-lift bg-white border border-gray-200 rounded-lg p-4 text-center transition-all"
+          style={`background-color: rgba(74, 85, 104, ${getOpacity(count)}); color: ${getOpacity(count) > 0.6 ? 'white' : '#1a1a1a'};`}
+        >
+          <div class="text-sm font-medium mb-1">{tag}</div>
+          <div class="text-xs opacity-75">{count}件</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

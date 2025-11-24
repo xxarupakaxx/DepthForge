@@ -1,0 +1,60 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = 'DepthForge', 
+  description = '浅さが露出した瞬間を記録し、思考を鍛え直すためのログ。' 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>{title}</title>
+    <style>
+      @import '../styles/global.css';
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-900 font-sans antialiased">
+    <header class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <nav class="flex items-center justify-between">
+          <a href="/" class="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors">
+            DepthForge
+          </a>
+          <div class="flex gap-6">
+            <a href="/entries" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+              エントリ
+            </a>
+            <a href="/tags" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+              タグ
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="border-t border-gray-200 mt-24 py-12 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-center text-sm text-gray-500">
+          © 2025 DepthForge. 浅さと向き合い、深さを鍛える。
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

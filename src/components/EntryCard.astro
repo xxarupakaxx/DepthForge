@@ -1,0 +1,50 @@
+---
+interface Props {
+  title: string;
+  date: string;
+  sourceType: string;
+  tags: string[];
+  excerpt: string;
+  slug: string;
+}
+
+const { title, date, sourceType, tags, excerpt, slug } = Astro.props;
+
+const sourceTypeLabels: Record<string, string> = {
+  book: '本',
+  article: '記事',
+  video: '動画',
+  conversation: '会話',
+  other: 'その他',
+};
+---
+
+<a href={`/entries/${slug}`} class="block bg-white border border-gray-200 rounded-lg p-6 hover-lift">
+  <div class="flex items-center gap-2 mb-3">
+    <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
+      {sourceTypeLabels[sourceType] || sourceType}
+    </span>
+    <span class="text-xs text-gray-500">{date}</span>
+  </div>
+  
+  <h3 class="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
+  
+  <p class="text-sm text-gray-600 mb-3 line-clamp-2">{excerpt}</p>
+  
+  <div class="flex flex-wrap gap-2">
+    {tags.slice(0, 3).map(tag => (
+      <span class="text-xs px-2 py-1 bg-gray-50 text-gray-700 rounded border border-gray-200">
+        {tag}
+      </span>
+    ))}
+  </div>
+</a>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

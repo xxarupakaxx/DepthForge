@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+
+const allEntries = await getCollection('entries');
+const totalEntries = allEntries.length;
+
+const allTags = new Set<string>();
+allEntries.forEach(entry => {
+  entry.data.tags.forEach(tag => allTags.add(tag));
+});
+const uniqueTags = allTags.size;
+
+const thirtyDaysAgo = new Date();
+thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+const recentEntries = allEntries.filter(
+  entry => new Date(entry.data.date) >= thirtyDaysAgo
+).length;
+
+const tagCounts = new Map<string, number>();
+allEntries.forEach(entry => {
+  entry.data.tags.forEach(tag => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+const topTag = Array.from(tagCounts.entries())
+  .sort((a, b) => b[1] - a[1])[0];
+
+const stats = [
+  { label: '総エントリ数', value: totalEntries },
+  { label: '浅さパターン', value: uniqueTags },
+  { label: '直近30日', value: recentEntries },
+  { label: '最多パターン', value: topTag ? topTag[0] : '-' },
+];
+---
+
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Depth Stats</h2>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      {stats.map(stat => (
+        <div class="bg-white border border-gray-200 rounded-lg p-6 text-center">
+          <div class="text-3xl font-bold text-gray-900 mb-2">
+            {typeof stat.value === 'number' ? stat.value : stat.value}
+          </div>
+          <div class="text-sm text-gray-600">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

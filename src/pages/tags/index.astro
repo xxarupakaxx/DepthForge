@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+
+const allEntries = await getCollection('entries');
+const tagCounts = new Map<string, number>();
+
+allEntries.forEach(entry => {
+  entry.data.tags.forEach(tag => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+
+const sortedTags = Array.from(tagCounts.entries())
+  .sort((a, b) => b[1] - a[1]);
+---
+
+<Layout title="タグ一覧 | DepthForge">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">浅さのパターン一覧</h1>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {sortedTags.map(([tag, count]) => (
+        <a
+          href={`/tags/${encodeURIComponent(tag)}`}
+          class="bg-white border border-gray-200 rounded-lg p-6 hover-lift text-center"
+        >
+          <div class="text-lg font-semibold text-gray-900 mb-2">{tag}</div>
+          <div class="text-sm text-gray-600">{count}件のエントリ</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>
