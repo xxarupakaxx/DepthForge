@@ -1,4 +1,4 @@
-export interface TagMetadata {
+export type TagMetadata = {
   name: string;
   description: string;
   contexts: string[];
@@ -19,7 +19,7 @@ export async function getTagMetadata(tagName: string): Promise<TagMetadata | nul
     const metadata: TagMetadata = data.default || data;
     tagDataCache.set(tagName, metadata);
     return metadata;
-  } catch (error) {
+  } catch {
     // JSON ファイルが存在しない場合はデフォルト値を返す
     return null;
   }
