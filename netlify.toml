@@ -1,0 +1,10 @@
+# Netlify デプロイ設定
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+# リダイレクト設定（オプション）
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
