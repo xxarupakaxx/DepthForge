@@ -1,11 +1,17 @@
+export type ImpactExample = {
+  title: string;
+  slug: string;
+};
+
 export type TagMetadata = {
   name: string;
-  description: string;
+  shortDescription: string;
   contexts: string[];
-  causePatterns: string[];
+  thinkingPatterns: string[];
   avoidanceRules: string[];
+  impactExamples?: ImpactExample[];
   icon?: string;
-}
+};
 
 const tagDataCache = new Map<string, TagMetadata>();
 
@@ -28,9 +34,9 @@ export async function getTagMetadata(tagName: string): Promise<TagMetadata | nul
 export function getDefaultTagMetadata(tagName: string): TagMetadata {
   return {
     name: tagName,
-    description: 'このパターンの詳細な説明はまだ追加されていません。',
+    shortDescription: 'このパターンの詳細な説明はまだ追加されていません。',
     contexts: [],
-    causePatterns: [],
+    thinkingPatterns: [],
     avoidanceRules: [],
   };
 }

@@ -1,15 +1,19 @@
 ---
-import { getCollection } from 'astro:content';
-import EntryCard from './EntryCard.astro';
+import { getCollection } from "astro:content";
+import EntryCard from "./EntryCard.astro";
 
-const allEntries = await getCollection('entries');
+const allEntries = await getCollection("entries");
 const sortedEntries = allEntries
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  )
   .slice(0, 8);
 
 function getExcerpt(content: string): string {
-  const lines = content.split('\n').filter(line => line.trim() && !line.startsWith('#'));
-  return lines[0]?.substring(0, 100) || '';
+  const lines = content
+    .split("\n")
+    .filter((line) => line.trim() && !line.startsWith("#"));
+  return lines[0]?.substring(0, 100) || "";
 }
 ---
 
@@ -17,27 +21,35 @@ function getExcerpt(content: string): string {
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between mb-8">
       <h2 class="text-3xl font-bold text-gray-900">最近のエントリ</h2>
-      <a href="/entries" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+      <a
+        href="/entries"
+        class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+      >
         すべて見る →
       </a>
     </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {sortedEntries.map(async (entry) => {
-        const { Content } = await entry.render();
-        const content = entry.body;
-        
-        return (
-          <EntryCard
-            title={entry.data.title}
-            date={entry.data.date}
-            sourceType={entry.data.sourceType}
-            tags={entry.data.tags}
-            excerpt={getExcerpt(content)}
-            slug={entry.slug}
-          />
-        );
-      })}
+
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+    >
+      {
+        sortedEntries.map(async (entry) => {
+          const { Content } = await entry.render();
+          const content = entry.body;
+
+          return (
+            <EntryCard
+              title={entry.data.title}
+              date={entry.data.date}
+              sourceType={entry.data.sourceType}
+              sourceTitle={entry.data.sourceTitle}
+              tags={entry.data.tags}
+              excerpt={getExcerpt(content)}
+              slug={entry.slug}
+            />
+          );
+        })
+      }
     </div>
   </div>
 </section>

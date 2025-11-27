@@ -4,9 +4,9 @@ interface Props {
   description?: string;
 }
 
-const { 
-  title = 'DepthForge', 
-  description = '浅さが露出した瞬間を記録し、思考を鍛え直すためのログ。' 
+const {
+  title = "DepthForge",
+  description = "浅さが露出した瞬間を記録し、思考を鍛え直すためのログ。",
 } = Astro.props;
 ---
 
@@ -18,29 +18,47 @@ const {
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <title>{title}</title>
     <style>
-      @import '../styles/global.css';
+      @import "../styles/global.css";
     </style>
   </head>
   <body class="bg-gray-50 text-gray-900 font-sans antialiased">
-    <header class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+    <header
+      class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <nav class="flex items-center justify-between">
-          <a href="/" class="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors">
-            DepthForge
+        <nav class="flex items-center gap-8">
+          <a
+            href="/"
+            class="text-gray-700 hover:text-gray-900 transition-colors"
+          >
+            トップ
           </a>
-          <div class="flex gap-6">
-            <a href="/entries" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">
-              エントリ
-            </a>
-            <a href="/tags" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">
-              タグ
-            </a>
-          </div>
+          <a
+            href="/entries"
+            class="text-gray-700 hover:text-gray-900 transition-colors"
+          >
+            エントリ一覧
+          </a>
+          <a
+            href="/tags"
+            class="text-gray-700 hover:text-gray-900 transition-colors"
+          >
+            パターン一覧
+          </a>
+          <a
+            href="/sources"
+            class="text-gray-700 hover:text-gray-900 transition-colors"
+          >
+            媒体別
+          </a>
         </nav>
       </div>
     </header>

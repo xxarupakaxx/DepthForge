@@ -1,11 +1,11 @@
 ---
-interface Props {
+type Props = {
   name: string;
-  description: string;
+  shortDescription: string;
   icon?: string;
-}
+};
 
-const { name, description, icon } = Astro.props;
+const { name, shortDescription, icon } = Astro.props;
 ---
 
 <section
@@ -45,7 +45,7 @@ const { name, description, icon } = Astro.props;
       class="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto fade-in"
       style="animation-delay: 0.2s;"
     >
-      {description}
+      {shortDescription}
     </p>
   </div>
 </section>
